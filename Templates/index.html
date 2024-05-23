@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Detecto - Insurance Fraud Detection</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+  <style>
+    body {
+      font-family: 'Arimo', sans-serif;
+      background-color: #f0f0f0; /* Light gray background color */
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #4CAF50; /* Green background color for header */
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff; /* White background color for content */
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      text-align: center;
+      color: white; /* Font color of the header */
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    }
+
+    form {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4CAF50;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Detecto</h1>
+  </div>
+
+  <div class="container">
+    <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}" method="post">
+      <label for="months_as_customer">Months as Customer</label>
+      <input type="number" id="months_as_customer" name="months_as_customer" required>
+      <br>
+      <label for="policy_deductable">Policy Deductable</label>
+      <input type="number" id="policy_deductable" name="policy_deductable" required>
+      <br>
+      <label for="umbrella_limit">Umbrella Limit</label>
+      <input type="number" id="umbrella_limit" name="umbrella_limit" required>
+      <br>
+      <label for="capital-gains">Capital Gains</label>
+      <input type="number" id="capital-gains" name="capital-gains" required>
+      <br>
+      <label for="capital-loss">Capital Loss</label>
+      <input type="number" id="capital-loss" name="capital-loss" required>
+      <br>
+      <label for="incident_hour_of_the_day">Incident Hour of the Day</label>
+      <select id="incident_hour_of_the_day" name="incident_hour_of_the_day" required>
+        {% for hour in range(24) %}
+          <option value="{{ hour }}">{{ hour }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <label for="number_of_vehicles_involved">Number of Vehicles Involved</label>
+      <select id="number_of_vehicles_involved" name="number_of_vehicles_involved" required>
+        {% for num in range(10) %}
+          <option value="{{ num }}">{{ num }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <label for="bodily_injuries">Bodily Injuries</label>
+      <select id="bodily_injuries" name="bodily_injuries" required>
+        {% for num in range(10) %}
+          <option value="{{ num }}">{{ num }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <label for="witnesses">Witnesses</label>
+      <select id="witnesses" name="witnesses" required>
+        {% for num in range(10) %}
+          <option value="{{ num }}">{{ num }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <label for="injury_claim">Injury Claim</label>
+      <input type="number" id="injury_claim" name="injury_claim" required>
+      <br>
+      <label for="property_claim">Property Claim</label>
+      <input type="number" id="property_claim" name="property_claim" required>
+      <br>
+      <label for="vehicle_claim">Vehicle Claim</label>
+      <input type="number" id="vehicle_claim" name="vehicle_claim" required>
+      <br>
+      <button type="submit">Predict</button>
+    </form>
+
+    <h2>{{ prediction_text }}</h2>
+  </div>
+</body>
+
+</html>
